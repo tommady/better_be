@@ -14,7 +14,10 @@ fn make_text(args: Vec<String>) -> String {
         })
         .collect();
 
-    out.split_whitespace().collect::<Vec<&str>>().join("-")
+    out.split_whitespace()
+        .collect::<Vec<&str>>()
+        .join("-")
+        .to_lowercase()
 }
 
 macro_rules! vec_of_strings {
@@ -36,6 +39,9 @@ mod tests {
         assert_eq!(want, got);
 
         let got = make_text(vec_of_strings!["gglong?./ggsmall"]);
+        assert_eq!(want, got);
+
+        let got = make_text(vec_of_strings!["GglonG?./GGSMALL"]);
         assert_eq!(want, got);
     }
 }
