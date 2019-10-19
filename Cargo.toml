@@ -1,7 +1,7 @@
 [package]
-name = "better_branch"
-version = "0.1.1"
-authors = ["lindroos <emptysmile1013@gmail.com>"]
-edition = "2018"
+name = "better_be"
+version = "0.1.2"
+authors = ["tommady <tommady@users.noreply.github.com>"]
 
 [dependencies]
+structopt = { version = "0.3", default-features = false }
