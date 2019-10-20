@@ -1,24 +1,20 @@
 extern crate structopt;
 use structopt::StructOpt;
 
-fn make_text(text: String, from: String, to: String, to_lowercase: bool) -> String {
-    let out: String = text
-        .chars()
-        .map(|x| match x {
-            '?' => ' ',
-            '.' => ' ',
-            '/' => ' ',
-            ',' => ' ',
-            '!' => ' ',
-            _ => x,
-        })
-        .collect();
+fn make_text(text: String, from: String, to: String, lowercase: bool, special: bool) -> String {
+    let mut out = text;
+    if special {
+        out = out.replace(
+            &['(', ')', ',', '\"', '.', ';', ':', '\'', '!', '/', '?'][..],
+            "",
+        );
+    }
 
     let str_from = from.to_string();
     let str_to = to.to_string();
     let mut ret = out.split(&str_from).collect::<Vec<&str>>().join(&str_to);
 
-    if to_lowercase {
+    if lowercase {
         ret = ret.to_lowercase();
     }
 
@@ -37,6 +33,7 @@ mod tests {
             String::from("_"),
             String::from("-"),
             false,
+            false,
         );
         assert_eq!(want, got);
 
@@ -46,6 +43,7 @@ mod tests {
             String::from("_"),
             String::from("-"),
             true,
+            false,
         );
         assert_eq!(want, got);
 
@@ -54,6 +52,17 @@ mod tests {
             String::from("gglong ggsmall"),
             String::from(" "),
             String::from("\\ "),
+            true,
+            false,
+        );
+        assert_eq!(want, got);
+
+        let want = String::from("gglong-ggsmall");
+        let got = make_text(
+            String::from("gglong. ggsmall"),
+            String::from(" "),
+            String::from("-"),
+            true,
             true,
         );
         assert_eq!(want, got);
@@ -71,10 +80,18 @@ struct Opt {
     words_to: String,
     #[structopt(short, long)]
     lowercase: bool,
+    #[structopt(short, long)]
+    special: bool,
 }
 
 fn main() {
     let opt = Opt::from_args();
-    let out = make_text(opt.input_words, opt.words_from, opt.words_to, opt.lowercase);
+    let out = make_text(
+        opt.input_words,
+        opt.words_from,
+        opt.words_to,
+        opt.lowercase,
+        opt.special,
+    );
     println!("{}", out);
 }
