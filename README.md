@@ -32,6 +32,12 @@ as-a-subscriber--i-want-to-process-comments-and-insert-into-es
 ### example2
 ```
 ./better_be "As a subscriber, I want to process comments and insert into ES"
-As\ a\ subscriber\ \ I\ want\ to\ process\ comments\ and\ insert\ into\ ES
+As\ a\ subscriber,\ I\ want\ to\ process\ comments\ and\ insert\ into\ ES
+```
+
+### example3
+```
+./better_be -s "As a subscriber, I want to process comments and insert into ES"
+As\ a\ subscriber\ I\ want\ to\ process\ comments\ and\ insert\ into\ ES
 ```
 
