@@ -4,7 +4,7 @@ for formating a better string
 
 ### usage
 ```
-better-be 0.1.2
+better_be 0.1.3
 format the words you want
 
 USAGE:
@@ -13,6 +13,7 @@ USAGE:
 FLAGS:
     -h, --help         Prints help information
     -l, --lowercase
+    -s, --special
     -V, --version      Prints version information
 
 OPTIONS:
