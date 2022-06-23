@@ -10,9 +10,7 @@ fn make_text(text: String, from: String, to: String, lowercase: bool, special: b
         );
     }
 
-    let str_from = from.to_string();
-    let str_to = to.to_string();
-    let mut ret = out.split(&str_from).collect::<Vec<&str>>().join(&str_to);
+    let mut ret = out.split(&from).collect::<Vec<&str>>().join(&to);
 
     if lowercase {
         ret = ret.to_lowercase();
