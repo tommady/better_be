@@ -1,7 +1,13 @@
 [package]
 name = "better_be"
-version = "0.1.3"
+version = "0.1.4"
 authors = ["tommady <tommady@users.noreply.github.com>"]
 
 [dependencies]
 structopt = { version = "0.3", default-features = false }
+
+[profile.release]
+opt-level = 's'
+lto = true
+codegen-units = 1
+panic = 'abort'
