@@ -65,6 +65,18 @@ jobs:
       - name: Build bianry
         run: cargo build --release
 
+      - name: Read release.md and use it as a body of new release
+        id: read_release
+        shell: bash
+        run: |
+          r=$(awk -v ver=${{ github.ref }} '
+            /^## / { if (p) { exit }; if ($2 == ver) { p=1; next } } p && NF
+          ' CHANGELOG.md)
+          r="${r//'%'/'%25'}"                               # Multiline escape sequences for %
+          r="${r//$'\n'/'%0A'}"                             # Multiline escape sequences for '\n'
+          r="${r//$'\r'/'%0D'}"                             # Multiline escape sequences for '\r'
+          echo "::set-output name=RELEASE_BODY::$r"         # <--- Set environment variable
+
       - name: Upload binary to release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -72,3 +84,6 @@ jobs:
           file: target/release/${{ matrix.artifact_name }}
           asset_name: ${{ matrix.asset_name }}
           tag: ${{ github.ref }}
+          overwrite: true
+          body: |
+            ${{ steps.read_release.outputs.RELEASE_BODY }}

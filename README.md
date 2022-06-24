@@ -4,7 +4,7 @@ for formating a better string
 
 ### usage
 ```
-better_be 0.1.3
+better_be 0.1.4
 format the words you want
 
 USAGE:
