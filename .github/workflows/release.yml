@@ -69,13 +69,8 @@ jobs:
         id: read_release
         shell: bash
         run: |
-          r=$(awk -v ver=${{ github.ref }} '
-            /^## / { if (p) { exit }; if ($2 == ver) { p=1; next } } p && NF
-          ' CHANGELOG.md)
-          r="${r//'%'/'%25'}"                               # Multiline escape sequences for %
-          r="${r//$'\n'/'%0A'}"                             # Multiline escape sequences for '\n'
-          r="${r//$'\r'/'%0D'}"                             # Multiline escape sequences for '\r'
-          echo "::set-output name=RELEASE_BODY::$r"         # <--- Set environment variable
+          r=$(awk -v ver=${{ github.ref }} '/^## / { if (p) { exit }; if ($2 == ver) { p=1; next } } p && NF' CHANGELOG.md)
+          echo "::set-output name=RELEASE_BODY::$r"
 
       - name: Upload binary to release
         uses: svenstaro/upload-release-action@v2
