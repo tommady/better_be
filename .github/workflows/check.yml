@@ -37,6 +37,7 @@ jobs:
         toolchain: stable
         target: ${{ matrix.target }}
         components: rustfmt, clippy 
+        override: true
 
     - name: Using cache to speed up
       uses: actions/cache@v3
